@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useApp, usePersona } from './store.jsx'
 import { ToastStack, Modal, Field, Input, Button, Spinner } from './ui.jsx'
 import { GH } from './github.js'
+import HelpButton from './Help.jsx'
 import Dashboard from './pages/Dashboard.jsx'
 import BonForm from './pages/BonForm.jsx'
 import KmForm from './pages/KmForm.jsx'
@@ -224,6 +225,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between gap-4">
           <Logo />
           <div className="flex items-center gap-2">
+            <HelpButton />
             <SyncBadge />
             <PersonaSwitcher />
           </div>
