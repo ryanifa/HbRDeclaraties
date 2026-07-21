@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+@theme {
+  --color-hbr-900: #001a45;
+  --color-hbr-800: #00286a;
+  --color-hbr-700: #003a8c;
+  --color-hbr-600: #0050b3;
+  --color-hbr-100: #e6eef9;
+  --color-hbr-50: #f2f7fc;
+  --color-accent-600: #0086c2;
+  --color-accent-500: #009fe3;
+  --color-accent-100: #d6f0fb;
+  --color-accent-50: #ecf8fe;
+  --font-sans: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  @apply bg-slate-100 text-slate-800;
+}
+
+/* Highlight-animatie voor AI-ingevulde velden */
+@keyframes ai-fill {
+  0% { background-color: var(--color-accent-100); box-shadow: 0 0 0 3px var(--color-accent-100); }
+  100% { background-color: white; box-shadow: 0 0 0 0 transparent; }
+}
+.ai-filled {
+  animation: ai-fill 1.6s ease-out;
+}
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(12px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.toast-in {
+  animation: toast-in 0.25s ease-out;
+}
+
+@keyframes route-draw {
+  from { stroke-dashoffset: 300; }
+  to { stroke-dashoffset: 0; }
+}
+.route-line {
+  stroke-dasharray: 300;
+  animation: route-draw 1.2s ease-out forwards;
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-up {
+  animation: fade-up 0.3s ease-out;
+}
