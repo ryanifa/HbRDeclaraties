@@ -5,13 +5,35 @@ Havenbedrijf Rotterdam. Conceptuele vervanger van SRXP — bedoeld als demo voor
 collega's en management. **Geen productiecode**: alle data is in-memory
 seed-data, er is geen backend en de AI-features zijn gesimuleerd.
 
-## Starten
+## Online demo (GitHub Pages)
 
-```bash
-npm install
-npm run dev        # ontwikkelserver
-npm run build      # productie-build in dist/
-```
+Elke push naar `main` wordt automatisch gebouwd en gepubliceerd via GitHub
+Actions (`.github/workflows/deploy.yml`). De demo staat op:
+
+**https://ryanifa.github.io/HbRDeclaraties/**
+
+Lokaal draaien kan ook: `npm install && npm run dev`.
+
+## GitHub als database
+
+De demo-data staat in [`db/db.json`](db/db.json) in deze repo:
+
+- **Lezen** — de app laadt bij het opstarten automatisch de laatste versie via
+  de GitHub API (publieke repo, geen token nodig). Statusindicator in de
+  header: *Meelezen*.
+- **Schrijven** — klik op de statusindicator rechtsboven en plak een
+  *fine-grained personal access token* (GitHub → Settings → Developer settings
+  → Fine-grained tokens; alleen deze repo, permissie **Contents: read and
+  write**). Daarna wordt elke wijziging (indienen, goedkeuren, uitbetalen,
+  masterdata…) na ±1,5 s automatisch als commit op `db/db.json` opgeslagen.
+  Het token blijft alleen in je eigen browser (localStorage).
+- **Resetten** — in hetzelfde venster zet *Demo-data resetten* de database
+  terug naar de startsituatie.
+
+Kanttekeningen (bewust simpel gehouden voor een PoC): laatste schrijver wint
+bij gelijktijdig gebruik, en andere kijkers zien wijzigingen pas na een
+herlaad van de pagina. Deel het token niet — iedereen met dat token kan in de
+repo schrijven.
 
 ## Demo-flow (suggestie)
 

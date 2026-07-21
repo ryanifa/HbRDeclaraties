@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useApp, usePersona } from './store.jsx'
-import { ToastStack } from './ui.jsx'
+import { ToastStack, Modal, Field, Input, Button, Spinner } from './ui.jsx'
+import { GH } from './github.js'
 import Dashboard from './pages/Dashboard.jsx'
 import BonForm from './pages/BonForm.jsx'
 import KmForm from './pages/KmForm.jsx'
@@ -112,6 +113,86 @@ function PersonaSwitcher() {
   )
 }
 
+const SYNC_INFO = {
+  loading: { dot: 'bg-slate-300 animate-pulse', label: 'Laden…' },
+  offline: { dot: 'bg-slate-400', label: 'Lokaal' },
+  readonly: { dot: 'bg-accent-500', label: 'Meelezen' },
+  pending: { dot: 'bg-amber-400 animate-pulse', label: 'Opslaan…' },
+  synced: { dot: 'bg-emerald-500', label: 'Gesynchroniseerd' },
+  error: { dot: 'bg-red-500', label: 'Opslaan mislukt' },
+}
+
+function SyncBadge() {
+  const { state, connectGitHub, disconnectGitHub, resetDb } = useApp()
+  const [open, setOpen] = useState(false)
+  const [tokenDraft, setTokenDraft] = useState('')
+  const [busy, setBusy] = useState(false)
+  const info = SYNC_INFO[state.db.status] || SYNC_INFO.offline
+
+  async function connect() {
+    setBusy(true)
+    const ok = await connectGitHub(tokenDraft.trim())
+    setBusy(false)
+    if (ok) { setOpen(false); setTokenDraft('') }
+  }
+
+  return (
+    <>
+      <button
+        onClick={() => setOpen(true)}
+        className="flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 hover:border-accent-500/50 transition shadow-sm"
+        title="GitHub-database (db/db.json)"
+      >
+        <span className={`w-2.5 h-2.5 rounded-full ${info.dot}`} />
+        <span className="hidden lg:block text-xs font-semibold text-slate-600">{info.label}</span>
+      </button>
+
+      <Modal open={open} onClose={() => setOpen(false)} title="GitHub-database">
+        <p className="text-sm text-slate-600 mb-3">
+          De demo-data staat in <code className="text-xs bg-slate-100 rounded px-1 py-0.5">{GH.path}</code> in
+          de repo <b>{GH.owner}/{GH.repo}</b>. Iedereen leest automatisch mee; om <b>wijzigingen op te slaan</b> is
+          een GitHub-token nodig dat in die repo mag schrijven.
+        </p>
+        <div className={`rounded-xl border px-3 py-2 text-xs mb-4 ${
+          state.db.status === 'synced' ? 'bg-emerald-50 border-emerald-200 text-emerald-700'
+          : state.db.status === 'error' ? 'bg-red-50 border-red-200 text-red-600'
+          : 'bg-slate-50 border-slate-200 text-slate-500'
+        }`}>
+          Status: <b>{info.label}</b>
+          {state.db.status === 'offline' && ' — de database op GitHub is niet bereikbaar; je werkt met lokale demo-data.'}
+          {state.db.status === 'readonly' && ' — data geladen uit GitHub, maar wijzigingen blijven alleen in dit tabblad.'}
+          {state.db.status === 'synced' && ' — wijzigingen worden automatisch als commit opgeslagen.'}
+          {state.db.status === 'error' && ' — controleer of het token nog geldig is en schrijfrechten heeft.'}
+        </div>
+
+        {state.db.token ? (
+          <div className="flex flex-wrap gap-2">
+            <Button variant="secondary" onClick={() => { disconnectGitHub(); }}>Koppeling verbreken</Button>
+            <Button variant="danger" onClick={() => { resetDb(); setOpen(false) }}>Demo-data resetten</Button>
+          </div>
+        ) : (
+          <>
+            <Field label="Fine-grained personal access token" hint="GitHub → Settings → Developer settings → Fine-grained tokens. Geef alleen deze repo toegang met permissie 'Contents: read and write'. Het token wordt alleen in deze browser bewaard.">
+              <Input
+                type="password"
+                value={tokenDraft}
+                onChange={(e) => setTokenDraft(e.target.value)}
+                placeholder="github_pat_…"
+              />
+            </Field>
+            <div className="mt-4 flex gap-2">
+              <Button onClick={connect} disabled={!tokenDraft.trim() || busy}>
+                {busy ? <><Spinner className="w-4 h-4 text-white" /> Koppelen…</> : 'Koppelen & testen'}
+              </Button>
+              <Button variant="secondary" onClick={() => setOpen(false)}>Sluiten</Button>
+            </div>
+          </>
+        )}
+      </Modal>
+    </>
+  )
+}
+
 function ActingForBar() {
   const { state, dispatch } = useApp()
   const { actingFor } = usePersona()
@@ -142,7 +223,10 @@ export default function App() {
       <header className="bg-white border-b border-slate-200 sticky top-0 z-20">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between gap-4">
           <Logo />
-          <PersonaSwitcher />
+          <div className="flex items-center gap-2">
+            <SyncBadge />
+            <PersonaSwitcher />
+          </div>
         </div>
         <ActingForBar />
       </header>

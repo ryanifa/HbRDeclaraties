@@ -1,7 +1,8 @@
-import React, { createContext, useContext, useReducer, useCallback, useRef } from 'react'
+import React, { createContext, useContext, useReducer, useCallback, useEffect, useRef } from 'react'
 import {
   PEOPLE, CATEGORIES, PAYMENT_METHODS, TAGS, DECLARATIONS, FORMS, ASSISTANTS,
 } from './seed.js'
+import { loadDb, saveDb, TOKEN_KEY } from './github.js'
 
 const AppContext = createContext(null)
 
@@ -29,20 +30,41 @@ export function fmtDate(iso) {
   return `${d}-${m}-${y}`
 }
 
-const initialState = {
-  people: PEOPLE,
+// Welke delen van de state in db/db.json op GitHub staan
+const SEED_DB = {
   categories: CATEGORIES,
   paymentMethods: PAYMENT_METHODS,
   tags: TAGS,
   declarations: DECLARATIONS,
   forms: FORMS,
   assistants: ASSISTANTS,
+  formCounter: 1008,
+  declCounter: 16,
+}
+
+function normalizeDb(d = {}) {
+  const out = {}
+  for (const key of Object.keys(SEED_DB)) out[key] = d[key] ?? SEED_DB[key]
+  return out
+}
+
+function serialize(state) {
+  const out = {}
+  for (const key of Object.keys(SEED_DB)) out[key] = state[key]
+  return out
+}
+
+const initialState = {
+  people: PEOPLE,
+  ...SEED_DB,
   personaId: 'p-ryan',        // wie is "ingelogd" (demo-switcher)
   actingForId: null,           // namens wie wordt gedeclareerd (assistent-modus)
   nav: { page: 'dashboard', params: {} },
   toasts: [],
-  formCounter: 1008,
-  declCounter: 16,
+  db: {
+    status: 'loading',         // loading | offline | readonly | pending | synced | error
+    token: (typeof localStorage !== 'undefined' && localStorage.getItem(TOKEN_KEY)) || '',
+  },
 }
 
 function reducer(state, action) {
@@ -65,6 +87,15 @@ function reducer(state, action) {
       return { ...state, toasts: [...state.toasts, action.toast] }
     case 'TOAST_REMOVE':
       return { ...state, toasts: state.toasts.filter((t) => t.id !== action.id) }
+
+    case 'DB_LOADED':
+      return { ...state, ...action.data, db: { ...state.db, status: action.status } }
+    case 'DB_STATUS':
+      return state.db.status === action.status ? state : { ...state, db: { ...state.db, status: action.status } }
+    case 'DB_TOKEN':
+      return { ...state, db: { ...state.db, token: action.token } }
+    case 'DB_RESET':
+      return { ...state, ...SEED_DB }
 
     case 'DECL_ADD':
       return {
@@ -145,6 +176,9 @@ function reducer(state, action) {
 export function AppProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState)
   const toastId = useRef(0)
+  const lastSynced = useRef(null)   // JSON-snapshot zoals die op GitHub staat
+  const dbReady = useRef(false)
+  const saveTimer = useRef(null)
 
   const toast = useCallback((message, kind = 'success') => {
     const id = ++toastId.current
@@ -152,8 +186,69 @@ export function AppProvider({ children }) {
     setTimeout(() => dispatch({ type: 'TOAST_REMOVE', id }), 4200)
   }, [])
 
+  const applyLoaded = useCallback((data, token) => {
+    const merged = normalizeDb(data)
+    lastSynced.current = JSON.stringify(merged)
+    dbReady.current = true
+    dispatch({ type: 'DB_LOADED', data: merged, status: token ? 'synced' : 'readonly' })
+  }, [])
+
+  // Bij opstarten: database uit de GitHub-repo laden (valt terug op seed-data)
+  useEffect(() => {
+    let cancelled = false
+    loadDb(state.db.token)
+      .then((data) => { if (!cancelled) applyLoaded(data, state.db.token) })
+      .catch(() => { if (!cancelled) dispatch({ type: 'DB_STATUS', status: 'offline' }) })
+    return () => { cancelled = true }
+  }, [])
+
+  // Automatisch opslaan (debounced) zodra er een token is en de data wijzigt
+  const persistedJson = JSON.stringify(serialize(state))
+  useEffect(() => {
+    if (!dbReady.current || !state.db.token) return
+    if (persistedJson === lastSynced.current) return
+    clearTimeout(saveTimer.current)
+    dispatch({ type: 'DB_STATUS', status: 'pending' })
+    saveTimer.current = setTimeout(() => {
+      saveDb(JSON.parse(persistedJson), state.db.token)
+        .then(() => {
+          lastSynced.current = persistedJson
+          dispatch({ type: 'DB_STATUS', status: 'synced' })
+        })
+        .catch(() => dispatch({ type: 'DB_STATUS', status: 'error' }))
+    }, 1500)
+    return () => clearTimeout(saveTimer.current)
+  }, [persistedJson, state.db.token])
+
+  // GitHub-koppeling beheren (instellingen-dialoog)
+  const connectGitHub = useCallback(async (token) => {
+    try {
+      const data = await loadDb(token)
+      localStorage.setItem(TOKEN_KEY, token)
+      dispatch({ type: 'DB_TOKEN', token })
+      applyLoaded(data, token)
+      toast('Gekoppeld — wijzigingen worden nu opgeslagen in db/db.json op GitHub.')
+      return true
+    } catch {
+      toast('Koppelen mislukt — controleer het token en de rechten (Contents: read/write).', 'error')
+      return false
+    }
+  }, [applyLoaded, toast])
+
+  const disconnectGitHub = useCallback(() => {
+    localStorage.removeItem(TOKEN_KEY)
+    dispatch({ type: 'DB_TOKEN', token: '' })
+    dispatch({ type: 'DB_STATUS', status: dbReady.current ? 'readonly' : 'offline' })
+    toast('Koppeling verbroken — wijzigingen blijven alleen in dit browsertabblad.', 'info')
+  }, [toast])
+
+  const resetDb = useCallback(() => {
+    dispatch({ type: 'DB_RESET' })
+    toast('Database teruggezet naar de demo-startsituatie.', 'info')
+  }, [toast])
+
   return (
-    <AppContext.Provider value={{ state, dispatch, toast }}>
+    <AppContext.Provider value={{ state, dispatch, toast, connectGitHub, disconnectGitHub, resetDb }}>
       {children}
     </AppContext.Provider>
   )

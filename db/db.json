@@ -1,0 +1,659 @@
+{
+  "categories": [
+    {
+      "id": "c-km",
+      "name": "HR – Reizen: dienstkilometers (privé-auto)",
+      "route": "HR",
+      "active": true
+    },
+    {
+      "id": "c-ov",
+      "name": "HR – Reizen: OV zakelijk",
+      "route": "HR",
+      "active": true
+    },
+    {
+      "id": "c-studie",
+      "name": "HR – Studiekosten",
+      "route": "HR",
+      "active": true
+    },
+    {
+      "id": "c-thuiswerk",
+      "name": "HR – Thuiswerkvergoeding",
+      "route": "HR",
+      "active": true
+    },
+    {
+      "id": "c-lunch",
+      "name": "Lunch/diner extern (zakelijk)",
+      "route": "SPC",
+      "active": true
+    },
+    {
+      "id": "c-uitje",
+      "name": "Afdelings-/ploeguitje incl. consumpties",
+      "route": "SPC",
+      "active": true
+    },
+    {
+      "id": "c-cadeau",
+      "name": "Cadeau – Afscheid/jubileum collega",
+      "route": "SPC",
+      "active": true
+    },
+    {
+      "id": "c-congres",
+      "name": "Congres-/seminarkosten",
+      "route": "SPC",
+      "active": true
+    },
+    {
+      "id": "c-vaklit",
+      "name": "Vakliteratuur",
+      "route": "SPC",
+      "active": true
+    },
+    {
+      "id": "c-parkeren",
+      "name": "Parkeren & tol",
+      "route": "SPC",
+      "active": true
+    },
+    {
+      "id": "c-hotel",
+      "name": "Hotel/overnachting",
+      "route": "SPC",
+      "active": true
+    },
+    {
+      "id": "c-overig",
+      "name": "Overig (met toelichting)",
+      "route": "SPC",
+      "active": true
+    }
+  ],
+  "paymentMethods": [
+    {
+      "id": "pm-eigen",
+      "name": "Eigen bankkaart (voorgeschoten — te ontvangen)",
+      "active": true
+    },
+    {
+      "id": "pm-simpled",
+      "name": "Simpled Card (bedrijfskaart — geen uitbetaling)",
+      "active": true
+    },
+    {
+      "id": "pm-contant",
+      "name": "Contant (voorgeschoten)",
+      "active": true
+    }
+  ],
+  "tags": [
+    {
+      "id": "t-hybride",
+      "name": "Auto hybride"
+    },
+    {
+      "id": "t-elektrisch",
+      "name": "Auto elektrisch"
+    },
+    {
+      "id": "t-buitenland",
+      "name": "Buitenland"
+    },
+    {
+      "id": "t-zhg",
+      "name": "Project ZHG"
+    },
+    {
+      "id": "t-werkbezoek",
+      "name": "Werkbezoek"
+    },
+    {
+      "id": "t-ai",
+      "name": "AI-workshop"
+    }
+  ],
+  "declarations": [
+    {
+      "id": "d-01",
+      "ownerId": "p-ryan",
+      "type": "bon",
+      "status": "concept",
+      "formId": null,
+      "date": "2026-07-16",
+      "country": "Nederland",
+      "amount": 48.5,
+      "currency": "EUR",
+      "vatPct": 9,
+      "vatAmount": 4.01,
+      "categoryId": "c-lunch",
+      "paymentMethodId": "pm-eigen",
+      "supplier": "Van der Valk Rotterdam-Blijdorp",
+      "description": "Lunch met leverancier containersysteem",
+      "tagIds": [
+        "t-werkbezoek"
+      ],
+      "receipt": true
+    },
+    {
+      "id": "d-02",
+      "ownerId": "p-ryan",
+      "type": "bon",
+      "status": "concept",
+      "formId": null,
+      "date": "2026-07-18",
+      "country": "Nederland",
+      "amount": 29.95,
+      "currency": "EUR",
+      "vatPct": 9,
+      "vatAmount": 2.47,
+      "categoryId": "c-vaklit",
+      "paymentMethodId": "pm-eigen",
+      "supplier": "Managementboek.nl",
+      "description": "Boek \"AI in de logistiek\"",
+      "tagIds": [
+        "t-ai"
+      ],
+      "receipt": true
+    },
+    {
+      "id": "d-03",
+      "ownerId": "p-ryan",
+      "type": "km",
+      "status": "concept",
+      "formId": null,
+      "date": "2026-07-15",
+      "categoryId": "c-km",
+      "paymentMethodId": "pm-eigen",
+      "from": "World Port Center, Wilhelminakade 909, Rotterdam",
+      "to": "Bezuidenhoutseweg 73, Den Haag",
+      "via": [],
+      "retour": true,
+      "km": 46.8,
+      "amount": 16.85,
+      "currency": "EUR",
+      "supplier": "—",
+      "description": "Overleg ministerie IenW",
+      "tagIds": [
+        "t-hybride"
+      ],
+      "receipt": false
+    },
+    {
+      "id": "d-04",
+      "ownerId": "p-ryan",
+      "type": "km",
+      "status": "ingediend",
+      "formId": "f-1001",
+      "date": "2026-07-08",
+      "categoryId": "c-km",
+      "paymentMethodId": "pm-eigen",
+      "from": "World Port Center, Wilhelminakade 909, Rotterdam",
+      "to": "Maasvlakte 2, Rotterdam (Havennummer 8600)",
+      "via": [],
+      "retour": true,
+      "km": 76.4,
+      "amount": 27.5,
+      "currency": "EUR",
+      "supplier": "—",
+      "description": "Schouw kade Maasvlakte",
+      "tagIds": [
+        "t-hybride"
+      ],
+      "receipt": false
+    },
+    {
+      "id": "d-05",
+      "ownerId": "p-ryan",
+      "type": "km",
+      "status": "ingediend",
+      "formId": "f-1001",
+      "date": "2026-07-10",
+      "categoryId": "c-km",
+      "paymentMethodId": "pm-eigen",
+      "from": "World Port Center, Wilhelminakade 909, Rotterdam",
+      "to": "Bezuidenhoutseweg 73, Den Haag",
+      "via": [],
+      "retour": true,
+      "km": 46.8,
+      "amount": 16.85,
+      "currency": "EUR",
+      "supplier": "—",
+      "description": "Werksessie digitale corridor",
+      "tagIds": [
+        "t-hybride"
+      ],
+      "receipt": false
+    },
+    {
+      "id": "d-06",
+      "ownerId": "p-ryan",
+      "type": "bon",
+      "status": "goedgekeurd_lm",
+      "formId": "f-1002",
+      "date": "2026-07-02",
+      "country": "Nederland",
+      "amount": 395,
+      "currency": "EUR",
+      "vatPct": 21,
+      "vatAmount": 68.55,
+      "categoryId": "c-congres",
+      "paymentMethodId": "pm-eigen",
+      "supplier": "Ahoy Rotterdam",
+      "description": "Toegang congres Smart Ports 2026",
+      "tagIds": [
+        "t-ai"
+      ],
+      "receipt": true
+    },
+    {
+      "id": "d-07",
+      "ownerId": "p-ryan",
+      "type": "bon",
+      "status": "goedgekeurd_lm",
+      "formId": "f-1002",
+      "date": "2026-07-02",
+      "country": "Nederland",
+      "amount": 18,
+      "currency": "EUR",
+      "vatPct": 21,
+      "vatAmount": 3.12,
+      "categoryId": "c-parkeren",
+      "paymentMethodId": "pm-simpled",
+      "supplier": "Q-Park Ahoy",
+      "description": "Parkeren congresbezoek",
+      "tagIds": [],
+      "receipt": true
+    },
+    {
+      "id": "d-08",
+      "ownerId": "p-ryan",
+      "type": "bon",
+      "status": "afgewezen",
+      "formId": "f-1003",
+      "date": "2026-06-20",
+      "country": "Nederland",
+      "amount": 210,
+      "currency": "EUR",
+      "vatPct": 21,
+      "vatAmount": 36.45,
+      "categoryId": "c-uitje",
+      "paymentMethodId": "pm-eigen",
+      "supplier": "Bowlingcentrum Zuid",
+      "description": "Afdelingsuitje team Digitalisering (8 pers.)",
+      "tagIds": [],
+      "receipt": false
+    },
+    {
+      "id": "d-09",
+      "ownerId": "p-ryan",
+      "type": "km",
+      "status": "uitbetaald",
+      "formId": "f-1004",
+      "date": "2026-06-05",
+      "categoryId": "c-km",
+      "paymentMethodId": "pm-eigen",
+      "from": "World Port Center, Wilhelminakade 909, Rotterdam",
+      "to": "Jaarbeursplein 6, Utrecht",
+      "via": [],
+      "retour": true,
+      "km": 114.2,
+      "amount": 41.11,
+      "currency": "EUR",
+      "supplier": "—",
+      "description": "Havencongres Utrecht",
+      "tagIds": [
+        "t-hybride"
+      ],
+      "receipt": false
+    },
+    {
+      "id": "d-10",
+      "ownerId": "p-ryan",
+      "type": "bon",
+      "status": "uitbetaald",
+      "formId": "f-1004",
+      "date": "2026-06-12",
+      "country": "Nederland",
+      "amount": 24.6,
+      "currency": "EUR",
+      "vatPct": 9,
+      "vatAmount": 2.03,
+      "categoryId": "c-ov",
+      "paymentMethodId": "pm-eigen",
+      "supplier": "NS Reizigers",
+      "description": "Trein Rotterdam–Amsterdam retour",
+      "tagIds": [],
+      "receipt": true
+    },
+    {
+      "id": "d-11",
+      "ownerId": "p-ryan",
+      "type": "bon",
+      "status": "uitbetaald",
+      "formId": "f-1005",
+      "date": "2026-05-13",
+      "country": "Verenigd Koninkrijk",
+      "amount": 168.2,
+      "currency": "GBP",
+      "amountForeign": 145,
+      "vatPct": 0,
+      "vatAmount": 0,
+      "categoryId": "c-hotel",
+      "paymentMethodId": "pm-eigen",
+      "supplier": "Premier Inn London Docklands",
+      "description": "Overnachting werkbezoek Port of London",
+      "tagIds": [
+        "t-buitenland",
+        "t-werkbezoek"
+      ],
+      "receipt": true
+    },
+    {
+      "id": "d-12",
+      "ownerId": "p-ryan",
+      "type": "bon",
+      "status": "uitbetaald",
+      "formId": "f-1005",
+      "date": "2026-05-14",
+      "country": "Verenigd Koninkrijk",
+      "amount": 44.66,
+      "currency": "GBP",
+      "amountForeign": 38.5,
+      "vatPct": 0,
+      "vatAmount": 0,
+      "categoryId": "c-lunch",
+      "paymentMethodId": "pm-eigen",
+      "supplier": "The Gun, Docklands",
+      "description": "Lunch met delegatie Port of London",
+      "tagIds": [
+        "t-buitenland",
+        "t-werkbezoek"
+      ],
+      "receipt": true
+    },
+    {
+      "id": "d-13",
+      "ownerId": "p-ryan",
+      "type": "bon",
+      "status": "uitbetaald",
+      "formId": "f-1006",
+      "date": "2026-05-06",
+      "country": "Nederland",
+      "amount": 249,
+      "currency": "EUR",
+      "vatPct": 0,
+      "vatAmount": 0,
+      "categoryId": "c-studie",
+      "paymentMethodId": "pm-eigen",
+      "supplier": "NCOI Opleidingen",
+      "description": "Module datagedreven werken",
+      "tagIds": [],
+      "receipt": true
+    },
+    {
+      "id": "d-14",
+      "ownerId": "p-ryan",
+      "type": "bon",
+      "status": "uitbetaald",
+      "formId": "f-1007",
+      "date": "2026-06-28",
+      "country": "Nederland",
+      "amount": 18,
+      "currency": "EUR",
+      "vatPct": 21,
+      "vatAmount": 3.12,
+      "categoryId": "c-parkeren",
+      "paymentMethodId": "pm-eigen",
+      "supplier": "Q-Park Ahoy",
+      "description": "Parkeren klantbezoek",
+      "tagIds": [],
+      "receipt": true
+    },
+    {
+      "id": "d-15",
+      "ownerId": "p-ryan",
+      "type": "bon",
+      "status": "uitbetaald",
+      "formId": "f-1007",
+      "date": "2026-06-28",
+      "country": "Nederland",
+      "amount": 52.3,
+      "currency": "EUR",
+      "vatPct": 9,
+      "vatAmount": 4.32,
+      "categoryId": "c-lunch",
+      "paymentMethodId": "pm-eigen",
+      "supplier": "Restaurant Loos, Rotterdam",
+      "description": "Lunch klantbezoek rederij",
+      "tagIds": [
+        "t-werkbezoek"
+      ],
+      "receipt": true
+    }
+  ],
+  "forms": [
+    {
+      "id": "f-1001",
+      "ownerId": "p-ryan",
+      "title": "Dienstreizen juli",
+      "route": "HR",
+      "status": "ingediend",
+      "submittedAt": "2026-07-19",
+      "history": [
+        {
+          "status": "concept",
+          "date": "2026-07-10",
+          "by": "Ryan Douglas"
+        },
+        {
+          "status": "ingediend",
+          "date": "2026-07-19",
+          "by": "Ryan Douglas"
+        }
+      ]
+    },
+    {
+      "id": "f-1002",
+      "ownerId": "p-ryan",
+      "title": "Congres Smart Ports 2026",
+      "route": "SPC",
+      "status": "goedgekeurd_lm",
+      "submittedAt": "2026-07-05",
+      "history": [
+        {
+          "status": "concept",
+          "date": "2026-07-03",
+          "by": "Ryan Douglas"
+        },
+        {
+          "status": "ingediend",
+          "date": "2026-07-05",
+          "by": "Ryan Douglas"
+        },
+        {
+          "status": "goedgekeurd_lm",
+          "date": "2026-07-07",
+          "by": "Chris van Dam"
+        }
+      ]
+    },
+    {
+      "id": "f-1003",
+      "ownerId": "p-ryan",
+      "title": "Teamuitje juni",
+      "route": "SPC",
+      "status": "afgewezen",
+      "submittedAt": "2026-06-22",
+      "rejectComment": "Bon ontbreekt. Voeg de bon van het bowlingcentrum toe en dien opnieuw in.",
+      "history": [
+        {
+          "status": "concept",
+          "date": "2026-06-21",
+          "by": "Ryan Douglas"
+        },
+        {
+          "status": "ingediend",
+          "date": "2026-06-22",
+          "by": "Ryan Douglas"
+        },
+        {
+          "status": "afgewezen",
+          "date": "2026-06-24",
+          "by": "Chris van Dam",
+          "comment": "Bon ontbreekt. Voeg de bon van het bowlingcentrum toe en dien opnieuw in."
+        }
+      ]
+    },
+    {
+      "id": "f-1004",
+      "ownerId": "p-ryan",
+      "title": "Declaraties juni — HR",
+      "route": "HR",
+      "status": "uitbetaald",
+      "submittedAt": "2026-06-15",
+      "paidAt": "2026-06-30",
+      "history": [
+        {
+          "status": "concept",
+          "date": "2026-06-14",
+          "by": "Ryan Douglas"
+        },
+        {
+          "status": "ingediend",
+          "date": "2026-06-15",
+          "by": "Ryan Douglas"
+        },
+        {
+          "status": "wacht_uitbetaling",
+          "date": "2026-06-17",
+          "by": "Chris van Dam"
+        },
+        {
+          "status": "uitbetaald",
+          "date": "2026-06-30",
+          "by": "Payroll"
+        }
+      ]
+    },
+    {
+      "id": "f-1005",
+      "ownerId": "p-ryan",
+      "title": "Werkbezoek Port of London",
+      "route": "SPC",
+      "status": "uitbetaald",
+      "submittedAt": "2026-05-18",
+      "paidAt": "2026-05-29",
+      "history": [
+        {
+          "status": "concept",
+          "date": "2026-05-16",
+          "by": "Ryan Douglas"
+        },
+        {
+          "status": "ingediend",
+          "date": "2026-05-18",
+          "by": "Ryan Douglas"
+        },
+        {
+          "status": "goedgekeurd_lm",
+          "date": "2026-05-19",
+          "by": "Chris van Dam"
+        },
+        {
+          "status": "wacht_uitbetaling",
+          "date": "2026-05-21",
+          "by": "Sandra Willems"
+        },
+        {
+          "status": "uitbetaald",
+          "date": "2026-05-29",
+          "by": "SPC"
+        }
+      ]
+    },
+    {
+      "id": "f-1006",
+      "ownerId": "p-ryan",
+      "title": "Declaraties mei — HR",
+      "route": "HR",
+      "status": "uitbetaald",
+      "submittedAt": "2026-05-10",
+      "paidAt": "2026-05-28",
+      "history": [
+        {
+          "status": "concept",
+          "date": "2026-05-08",
+          "by": "Ryan Douglas"
+        },
+        {
+          "status": "ingediend",
+          "date": "2026-05-10",
+          "by": "Ryan Douglas"
+        },
+        {
+          "status": "wacht_uitbetaling",
+          "date": "2026-05-12",
+          "by": "Chris van Dam"
+        },
+        {
+          "status": "uitbetaald",
+          "date": "2026-05-28",
+          "by": "Payroll"
+        }
+      ]
+    },
+    {
+      "id": "f-1007",
+      "ownerId": "p-ryan",
+      "title": "Klantbezoek rederij — juni",
+      "route": "SPC",
+      "status": "uitbetaald",
+      "submittedAt": "2026-06-29",
+      "paidAt": "2026-07-10",
+      "history": [
+        {
+          "status": "concept",
+          "date": "2026-06-28",
+          "by": "Ryan Douglas"
+        },
+        {
+          "status": "ingediend",
+          "date": "2026-06-29",
+          "by": "Ryan Douglas"
+        },
+        {
+          "status": "goedgekeurd_lm",
+          "date": "2026-06-30",
+          "by": "Chris van Dam"
+        },
+        {
+          "status": "wacht_uitbetaling",
+          "date": "2026-07-02",
+          "by": "Sandra Willems"
+        },
+        {
+          "status": "uitbetaald",
+          "date": "2026-07-10",
+          "by": "SPC"
+        }
+      ]
+    }
+  ],
+  "assistants": [
+    {
+      "id": "a-01",
+      "granteeId": "p-ryan",
+      "grantorId": "p-jan",
+      "role": "Declareren",
+      "from": "2026-07-01",
+      "until": "2026-12-31",
+      "active": true
+    }
+  ],
+  "formCounter": 1008,
+  "declCounter": 16
+}
